@@ -1,0 +1,23 @@
+[dumpfile] "/home/dwildie/efinix/6809/la0_waveform.vcd"
+[dumpfile_mtime] "Sat Aug 06 19:23:25 2022"
+[dumpfile_size] 12334
+[savefile] "/home/dwildie/efinix/6809/la0_waveform.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*0.000000 c 16 528 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[signals_width] 126
+[sst_expanded] 1
+@22
+top.q
+top.e
+top.RESET
+top.M6809_ADDR[15:0]
+top.M6809_DATA_IN[7:0]
+top.M6809_DATA_OUT[7:0]
+top.USB_SELECT
+top.RAM_SELECT
+top.ROM_SELECT
+top.M6809_RW
+top.\inst_ram/select
+top.\inst_ram/clock

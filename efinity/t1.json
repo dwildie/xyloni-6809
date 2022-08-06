@@ -1,0 +1,71 @@
+{
+    "debug_cores": [
+        {
+            "name": "la0",
+            "type": "la",
+            "uuid": "6c8315a8f9654202900af7de147df662",
+            "probes": [
+                {
+                    "name": "q",
+                    "width": 1,
+                    "probe_type": 1
+                },
+                {
+                    "name": "e",
+                    "width": 1,
+                    "probe_type": 1
+                },
+                {
+                    "name": "RESET",
+                    "width": 1,
+                    "probe_type": 1
+                },
+                {
+                    "name": "M6809_ADDR",
+                    "width": 16,
+                    "probe_type": 1
+                },
+                {
+                    "name": "M6809_DATA_IN",
+                    "width": 8,
+                    "probe_type": 1
+                },
+                {
+                    "name": "M6809_DATA_OUT",
+                    "width": 8,
+                    "probe_type": 1
+                },
+                {
+                    "name": "USB_SELECT",
+                    "width": 1,
+                    "probe_type": 1
+                },
+                {
+                    "name": "RAM_SELECT",
+                    "width": 1,
+                    "probe_type": 1
+                },
+                {
+                    "name": "ROM_SELECT",
+                    "width": 1,
+                    "probe_type": 1
+                },
+                {
+                    "name": "M6809_RW",
+                    "width": 1,
+                    "probe_type": 1
+                }
+            ],
+            "data_depth": 512,
+            "trigin_en": false,
+            "trigout_en": false,
+            "capture_control": false,
+            "input_pipeline": 1,
+            "auto_inserted": false
+        }
+    ],
+    "session": {
+        "debug_widget": [],
+        "wizard": {}
+    }
+}

@@ -1,0 +1,97 @@
+                      ; ********************************************
+F800                  ROMBEG          equ    $F800    ; ROM START ASSEMBLY ADDRESS
+0800                  ROMSIZ          equ    $800
+D000                  RAMBEG          equ    $D000
+E010                  ACIAS           equ    $E010
+DA00                  STACK           equ    $DA00
+                      ; *********************************************
+                      
+0004                  EOT             equ     $04
+000A                  LF              equ     $0a
+000D                  CR              equ     $0d
+                      
+0001                  RDR             equ     1
+0002                  TBE             equ     2
+                      
+F800                                  ORG     ROMBEG  ; ROM ASSEMBLY/DEFAULT ADDRESS
+                      
+F800  10CEDA00        START           lds     #STACK  ;INITIALIZE STACK POINTER
+                      
+F804  17005C                          lbsr    ACINIT  ; Initialise the 6850
+                      
+F807  8EF877                          ldx     #SIGNON ; Display signon message
+F80A  8D2E                            bsr     OUTSTR
+                      
+F80C  8D33            1               bsr     INCH
+                      
+F80E  8161                            cmpa    #'a'
+F810  2D08                            blt     2f
+F812  817A                            cmpa    #'z'
+F814  2E0E                            bgt     3f
+F816  8020                            suba    #$20    ; Change to upper case
+F818  200A                            bra     3f
+                      
+F81A  8141            2               cmpa    #'A'
+F81C  2D06                            blt     3f
+F81E  815A                            cmpa    #'Z'
+F820  2E02                            bgt     3f
+F822  8B20                            adda    #$20    ; Change to lower case
+                      
+F824  8D2B            3               bsr     OUTCH
+F826  810D                            cmpa    #CR
+F828  26E2                            bne     1b
+                      
+F82A  860A                            lda     #LF     ; New line
+F82C  8D23                            bsr     OUTCH
+F82E  863E                            lda     #'>'
+F830  8D1F                            bsr     OUTCH
+F832  8620                            lda     #' '
+F834  8D1B                            bsr     OUTCH
+F836  20D4                            bra     1b
+                      
+F838  8D17            1               bsr     OUTCH
+F83A  A680            OUTSTR          lda     ,x+     ; Get char to output
+F83C  8104                            cmpa    #EOT    ; EOT?
+F83E  26F8                            bne     1b      ; If not EOT, output it
+F840  39                              rts
+                      
+F841  3410            INCH            pshs    x
+F843  8EE010                          ldx     #ACIAS  ;POINT TO TERMINAL PORT
+F846  A684            1               lda     ,x      ;FETCH PORT STATUS
+F848  8501                            bita    #RDR    ;TEST READY BIT, RDRF ?
+F84A  27FA                            beq     1b      ;IF NOT RDY, THEN TRY AGAIN
+F84C  A601                            lda     1,x     ;FETCH CHAR
+F84E  3510                            puls    x       ;RESTORE IX
+F850  39                              rts
+                      
+F851  3412            OUTCH           pshs    a,x
+F853  8EE010                          ldx     #ACIAS  ;GET ADDR. OF TERMINAL
+F856  A684            1               lda     ,x      ;FETCH PORT STATUS
+F858  8502                            bita    #TBE    ;TEST TBE, OK TO XMIT ?
+F85A  27FA                            beq     1b      ;IF NOT LOOP UNTIL RDY
+F85C  3502                            puls    a       ;GET CHAR. FOR XMIT
+F85E  A701                            sta     1,x     ;XMIT CHAR.
+F860  3510                            puls    x       ;RESTORE IX
+F862  39                              rts
+                      
+F863  8EE010          ACINIT          ldx     #ACIAS  ;POINT TO CONTROL PORT ADDRESS
+F866  8603                            lda     #3      ;RESET ACIA COMMAND
+F868  A784                            sta     ,x      ;STORE IN CONTROL REGISTER
+F86A  8615                            lda     #$15    ;SET 8 DATA, 1 STOP AND No PARITY
+F86C  A784                            sta     ,x      ;STORE IN CONTROL REGISTER
+F86E  A684                            lda     ,x
+F870  A601                            lda     1,x
+F872  A684                            lda     ,x
+F874  A601                            lda     1,x
+F876  39                              rts
+                      
+                      ; ********************************************
+F877  0D0A58796C6F6E69204D3638303920546573742C2044616D69616E2057696C6469650D0A3E2004 SIGNON          FCC     "\r\nXyloni M6809 Test, Damian Wildie\r\n> ",EOT
+                      
+                      ; ********************************************
+                      ; Setup Reset Vector
+                      ; ********************************************
+FFFE                                  ORG    ROMBEG+ROMSIZ-2
+FFFE  F800                            FDB    START    ; RESTART
+                      
+0000                                  END    START
