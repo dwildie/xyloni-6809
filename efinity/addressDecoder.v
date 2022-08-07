@@ -1,3 +1,8 @@
+/* ------------------------------------------------------------------
+ * Address decoder
+ *
+ * Copyright (C) 2022 Damian Wildie
+ * ------------------------------------------------------------------*/
 module addressDecoder
 (
   input [15:0] address,           // CPU address bus (logical address)
@@ -12,27 +17,17 @@ module addressDecoder
   System memory map
   
   +---------------+
-  | 80000 - FFFFF | S100 RAM - Available
+  | 0F800 - 0FFFF | 2K FPGA ROM
   +---------------+
-  | 10000 - 7FFFF | Onboard RAM - Available
+  | 0E012 - 0F7FF | Unused
   +---------------+
-  | 0FFF0 - 0FFFF | Vectors (read), DAT tables (write)
+  | 0E010 - 0E011 | M6850 ACIA
   +---------------+
-  | 0F000 - 0FFEF | 4K FPGA ROM
+  | 0E000 - 0E00F | Unused
   +---------------+
-  | 0EC00 - 0EFFF | Onboard RAM - 1K Disk buffer
+  | 0D000 - 0DFFF | 4K FPGA RAM
   +---------------+
-  | 0E400 - 0EBFF | RAM - Available
-  +---------------+
-  | 0E300 - 0E3FF | Reserved
-  +---------------+
-  | 0E200 - 0E2FF | FPGA & board IO
-  +---------------+
-  | 0E100 - 0E1FF | S100 IO
-  +---------------+
-  | 0E000 - 0E0FF | SWTP IO
-  +---------------+
-  | 00000 - 0DFFF | Onboard RAM - Mapped
+  | 00000 - 0CFFF | Unused
   +---------------+
 */
 
