@@ -1,7 +1,6 @@
 .DEFAULT_GOAL := all
 
 AS		:= asm6809
-FPGA_ROM_FILES	:= ../../fpga-z80-board/rom_files/
 
 %.srec: %.asm
 	$(AS)  -S -o $@ -l $(@:.srec=.lst) $<
